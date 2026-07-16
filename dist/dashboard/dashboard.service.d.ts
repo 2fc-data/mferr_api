@@ -1,0 +1,33 @@
+import { Cause } from '../database/models/cause.model';
+import { CauseUser } from '../database/models/cause_user.model';
+import { CauseTask } from '../database/models/cause_task.model';
+import { CacheService } from '../common/cache/cache.service';
+import { AppLogger } from '../common/logger/logger.service';
+import { DashboardFilters, DashboardMetricsResult } from './dashboard.types';
+export declare class DashboardService {
+    private causeModel;
+    private causeUserModel;
+    private causeTaskModel;
+    private cacheService;
+    private logger;
+    private readonly CACHE_TTL;
+    private readonly MAX_FILTER_VALUE;
+    constructor(causeModel: typeof Cause, causeUserModel: typeof CauseUser, causeTaskModel: typeof CauseTask, cacheService: CacheService, logger: AppLogger);
+    getMetrics(filters: DashboardFilters): Promise<DashboardMetricsResult>;
+    invalidateCache(pattern?: string): Promise<void>;
+    getOperationalMetrics(filters: DashboardFilters): Promise<any>;
+    private calculateBottlenecks;
+    private calculateProductivity;
+    private computeMetrics;
+    private buildWhereClause;
+    private validateFilters;
+    private sanitizeNumericParam;
+    private fetchCauses;
+    private fetchTotals;
+    private computePreviousPeriodMetrics;
+    private buildMetricsResult;
+    private generateBivariateData;
+    private generateTimelineData;
+    private calculateTrends;
+    private resolveField;
+}

@@ -1,0 +1,90 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RulesController = void 0;
+const common_1 = require("@nestjs/common");
+const rules_service_1 = require("./rules.service");
+const create_rule_dto_1 = require("./dto/create-rule.dto");
+const update_rule_dto_1 = require("./dto/update-rule.dto");
+const rules_guard_1 = require("../auth/rules.guard");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
+const rules_decorator_1 = require("../auth/rules.decorator");
+let RulesController = class RulesController {
+    rulesService;
+    constructor(rulesService) {
+        this.rulesService = rulesService;
+    }
+    create(createRuleDto) {
+        return this.rulesService.create(createRuleDto);
+    }
+    findAll() {
+        return this.rulesService.findAll();
+    }
+    findOne(id) {
+        return this.rulesService.findOne(+id);
+    }
+    update(id, updateRuleDto) {
+        return this.rulesService.update(+id, updateRuleDto);
+    }
+    remove(id) {
+        return this.rulesService.remove(+id);
+    }
+};
+exports.RulesController = RulesController;
+__decorate([
+    (0, common_1.Post)(),
+    (0, rules_decorator_1.Rules)('settings.manage'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_rule_dto_1.CreateRuleDto]),
+    __metadata("design:returntype", void 0)
+], RulesController.prototype, "create", null);
+__decorate([
+    (0, common_1.Get)(),
+    (0, rules_decorator_1.Rules)('settings.manage', 'users.view'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], RulesController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    (0, rules_decorator_1.Rules)('settings.manage'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], RulesController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Patch)(':id'),
+    (0, rules_decorator_1.Rules)('settings.manage'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, update_rule_dto_1.UpdateRuleDto]),
+    __metadata("design:returntype", void 0)
+], RulesController.prototype, "update", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    (0, rules_decorator_1.Rules)('settings.manage'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], RulesController.prototype, "remove", null);
+exports.RulesController = RulesController = __decorate([
+    (0, common_1.Controller)('rules'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, rules_guard_1.RulesGuard),
+    __metadata("design:paramtypes", [rules_service_1.RulesService])
+], RulesController);
+//# sourceMappingURL=rules.controller.js.map

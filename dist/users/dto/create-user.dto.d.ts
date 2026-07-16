@@ -1,0 +1,29 @@
+export declare class CreateUserDto {
+    name: string;
+    username?: string;
+    document: string;
+    email: string;
+    password?: string;
+    phone1?: string;
+    phone2?: string;
+    is_active?: boolean;
+    profile_ids: number[];
+    nationality?: string;
+    birth_state?: string;
+    profession?: string;
+    birth_date?: string;
+    mother_name?: string;
+    father_name?: string;
+    rg?: string;
+    pis?: string;
+    ctps?: string;
+    responsible_id?: number;
+    responsible_relation?: string;
+    is_minor?: boolean;
+    lgpd_date?: string;
+    lgpd_doc_path?: string;
+    print_lgpd_consent?: boolean;
+    print_lgpd_minor_consent?: boolean;
+    different_address?: boolean;
+    lgpd_minor_doc_path?: string;
+}

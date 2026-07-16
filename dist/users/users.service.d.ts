@@ -1,0 +1,32 @@
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from '../database/models/user.model';
+import { Address } from '../database/models/address.model';
+import { UserAddress } from '../database/models/user_address.model';
+import { AuditService } from '../audit/audit.service';
+import { AppLogger } from '../common/logger/logger.service';
+import { PermissionHelper } from '../common/helpers/permission.helper';
+import { BaseService } from '../common/base.service';
+export declare class UsersService extends BaseService<User> {
+    private userModel;
+    private addressModel;
+    private userAddressModel;
+    private auditService;
+    private logger;
+    private permissionHelper;
+    constructor(userModel: typeof User, addressModel: typeof Address, userAddressModel: typeof UserAddress, auditService: AuditService, logger: AppLogger, permissionHelper: PermissionHelper);
+    private handleUniqueConstraintError;
+    private normalizeData;
+    create(createUserDto: CreateUserDto, currentUser?: any): Promise<User | null | undefined>;
+    findAll(currentUser?: any, includeDeleted?: boolean): Promise<any[]>;
+    findCollaborators(): Promise<User[]>;
+    findClients(): Promise<User[]>;
+    findOne(id: number): Promise<User | null>;
+    findOneByUsername(username: string): Promise<User | null>;
+    update(id: number, updateUserDto: UpdateUserDto, currentUser?: any): Promise<User | null>;
+    remove(id: number, currentUser?: any): Promise<number>;
+    updateUserDocument(id: number, field: 'lgpd_doc_path' | 'lgpd_minor_doc_path' | 'avatar_url', path: string): Promise<User>;
+    findOneByEmail(email: string): Promise<User | null>;
+    updatePassword(id: number, password_hash: string): Promise<void>;
+    restore(id: number, currentUser?: any): Promise<User | null>;
+}
