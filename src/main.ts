@@ -22,17 +22,21 @@ async function bootstrap() {
     }),
   );
 
+  const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
+    .split(',')
+    .map(o => o.trim())
+    .filter(Boolean);
+
   app.enableCors({
-    origin: (() => {
-      const origins = process.env.ALLOWED_ORIGINS;
-      if (!origins) {
-        if (process.env.NODE_ENV === 'production') {
-          throw new Error('ALLOWED_ORIGINS is required in production');
-        }
-        return true; // dev: allow all
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.length === 0) {
+        return callback(null, true);
       }
-      return origins.split(',').map(o => o.trim());
-    })(),
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error('Not allowed by CORS'));
+    },
     credentials: true,
   });
 
