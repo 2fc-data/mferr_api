@@ -23,9 +23,16 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: process.env.ALLOWED_ORIGINS
-      ? process.env.ALLOWED_ORIGINS.split(',')
-      : true,
+    origin: (() => {
+      const origins = process.env.ALLOWED_ORIGINS;
+      if (!origins) {
+        if (process.env.NODE_ENV === 'production') {
+          throw new Error('ALLOWED_ORIGINS is required in production');
+        }
+        return true; // dev: allow all
+      }
+      return origins.split(',').map(o => o.trim());
+    })(),
     credentials: true,
   });
 

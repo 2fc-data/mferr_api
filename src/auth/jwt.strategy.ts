@@ -9,20 +9,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: any) => {
-          console.log('--- Incoming Request to protected route ---');
-          console.log('Headers:', request.headers);
-          console.log('Cookies:', request.cookies);
           let data = request?.cookies?.access_token;
           if (!data) {
             data = ExtractJwt.fromAuthHeaderAsBearerToken()(request);
           }
-          console.log('Extracted JWT:', data ? 'Yes' : 'No');
           return data;
         },
       ]),
       ignoreExpiration: false,
-      secretOrKey:
-        configService.get<string>('PASSPORT_SECRET') || 'default_secret',
+      secretOrKey: configService.getOrThrow<string>('PASSPORT_SECRET'),
     });
   }
 

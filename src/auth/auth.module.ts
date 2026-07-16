@@ -17,8 +17,7 @@ import { PasswordResetToken } from '../database/models/password_reset_token.mode
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        secret:
-          configService.get<string>('PASSPORT_SECRET') || 'default_secret',
+        secret: configService.getOrThrow<string>('PASSPORT_SECRET'),
         signOptions: { expiresIn: '60m' },
       }),
       inject: [ConfigService],

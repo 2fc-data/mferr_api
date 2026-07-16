@@ -16,7 +16,7 @@ export class AppLogger implements LoggerService {
         level: (label) => ({ level: label }),
       },
       base: {
-        app: 'lawer-office',
+        app: 'lo_api',
         env: process.env.NODE_ENV || 'development',
       },
     });
